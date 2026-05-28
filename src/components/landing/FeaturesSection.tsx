@@ -1,4 +1,4 @@
-import { Layers, Zap, FileDown, ShieldCheck, SearchCheck, Users } from "lucide-react";
+import { Layers, Zap, FileDown, ShieldCheck, SearchCheck, Users, FileCheck } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const FeaturesSection = () => {
@@ -11,6 +11,7 @@ const FeaturesSection = () => {
     { icon: ShieldCheck, titleKey: "features.privacy", descKey: "features.privacyDesc" },
     { icon: SearchCheck, titleKey: "features.analytics", descKey: "features.analyticsDesc" },
     { icon: Users, titleKey: "features.multiTeacher", descKey: "features.multiTeacherDesc" },
+    { icon: FileCheck, titleKey: "features.primaryTitle", descKey: "features.primaryDesc" },
   ];
 
   return (

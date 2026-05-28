@@ -9,15 +9,14 @@
   },
   "hero": {
     "badge": "專為香港教師設計的 AI 批改助手",
-    "headline": "為香港教師贖回時間：DSE 級別 AI 作文批改專家",
+    "headline": "小學 × 中學：DSE + TSA + Primary AI 作文批改平台",
     "headlineHighlight": "",
-    "subheadline": "Compify 對標 DSE/TSA 評分準則，批量批改全班作文，自動生成 Content、Language、Organization 分項評分報告——今日訂閱，今晚改完 30 份作文。",
+    "subheadline": "Compify 對標 DSE/TSA 評分準則及小學課程指引，批量批改全班作文，自動生成分項評分報告——小學至高中一站式批改方案。",
     "watchDemo": "觀看示範",
     "statSaved": "每週節省時間",
-    "statAccuracy": "對標 DSE 準則",
-    "statTeachers": "教師信賴我們",
-    "batchGrading": "Compify — 全班批改",
-    "graded": "已批改"
+    "statAccuracy": "對標評分標準",
+    "statTeachers": "Beta 測試中",
+    "statRubrics": "評分標準預設"
   },
   "dimensions": {
     "label": "專業維度顯示",
@@ -71,7 +70,9 @@
     "analytics": "班級弱點分析",
     "analyticsDesc": "自動分析全班常見錯誤，例如「30% 學生混淆 Present Perfect 同 Past Simple」。",
     "multiTeacher": "多教師協作",
-    "multiTeacherDesc": "學校版讓同一科組嘅老師共享學生數據、統一評分標準。"
+    "multiTeacherDesc": "學校版讓同一科組嘅老師共享學生數據、統一評分標準。",
+    "primaryTitle": "小學寫作批改",
+    "primaryDesc": "專為小學中文及英文寫作設計，跟貼香港小學課程指引評分標準（內容、詞語、句子、結構、標點）。"
   },
   "testimonials": {
     "label": "用戶評價",
@@ -150,6 +151,7 @@
     "terms": "服務條款",
     "support": "客服支援",
     "copyright": "© 2026 Compify. 保留所有權利。",
+    "disclaimer": "本報告由 AI 輔助生成，僅供教學參考。最終評分以學校/教師最終判斷為準。DSE/TSA 等級換算僅供參考，非 HKEAA 官方評核結果。",
     "institutionQuotation": "校園/機構採購報價單"
   },
   "dashboard": {
@@ -230,6 +232,10 @@
     "rubricCustom": "自訂",
     "rubricDSEChi": "DSE 中文",
     "rubricDSEEng": "DSE 英文",
+    "rubricPrimChi": "小學中文",
+    "rubricPrimEng": "小學英文",
+    "rubricTSAChi": "TSA 中文",
+    "rubricTSAEng": "TSA 英文",
     "rubricIB": "IB",
     "rubricIELTS": "IELTS",
     "rubricTOEFL": "TOEFL",

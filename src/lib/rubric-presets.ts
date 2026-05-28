@@ -9,6 +9,10 @@ export interface RubricCriterion {
  *
  * DSE Chinese — HKEAA 卷二寫作能力 (內容40/表達30/結構20/標點字體10, 另扣錯別字最多3分)
  * DSE English — HKEAA Writing: Content 7/21, Language 7/21, Organization 7/21
+ * 
+ * 香港小學中文 (Primary Chinese) — 按香港小學課程指引：內容40%/詞語20%/句子20%/結構10%/標點10%
+ * 香港小學英文 (Primary English) — 按香港小學英文課程指引：Content 20%/Vocabulary 25%/Grammar 25%/Organization 15%/Mechanics 15%
+ * 
  * IB — IB Diploma English A: Lang & Lit Paper 1/2: four criteria each worth 5 marks (25% each)
  * IELTS — British Council / IDP / Cambridge: Task Response, Coherence & Cohesion, Lexical Resource, Grammatical Range & Accuracy (each 25%)
  * TOEFL — ETS iBT Writing: Integrated (0-5) & Academic Discussion (0-5); criteria: Development, Organization, Language Use
@@ -22,6 +26,120 @@ export const RUBRIC_PRESETS: Record<string, { labelKey: string; criteria: Rubric
       { name: "Language & Grammar", weight: 20, description: "Grammar, spelling, sentence variety" },
       { name: "Evidence & Support", weight: 20, description: "Use of examples, citations, data" },
       { name: "Style & Voice", weight: 10, description: "Tone, word choice, audience awareness" },
+    ],
+  },
+  // ========== 香港小學中文寫作（Primary Chinese） ==========
+  primary_chinese: {
+    labelKey: "grade.rubricPrimChi",
+    criteria: [
+      {
+        name: "內容",
+        weight: 40,
+        description: "切合題意、取材恰當、記敘/描寫/說明的完整性、感情真摯（配合小學課程指引）",
+      },
+      {
+        name: "詞語",
+        weight: 20,
+        description: "詞彙運用準確、量詞搭配恰當、成語及形容詞運用",
+      },
+      {
+        name: "句子",
+        weight: 20,
+        description: "句子結構完整、句式變化、複句運用、語氣流暢",
+      },
+      {
+        name: "結構",
+        weight: 10,
+        description: "段落分明、層次清晰、過渡自然、開頭結尾完整",
+      },
+      {
+        name: "標點字體",
+        weight: 10,
+        description: "標點符號正確、字體端正、格式規範",
+      },
+    ],
+  },
+  // ========== 香港小學英文寫作（Primary English） ==========
+  primary_english: {
+    labelKey: "grade.rubricPrimEng",
+    criteria: [
+      {
+        name: "Content",
+        weight: 20,
+        description: "Relevance to topic, ideas development, staying on task (HK Primary Curriculum Guide 2024)",
+      },
+      {
+        name: "Vocabulary",
+        weight: 25,
+        description: "Word choice, spelling accuracy, range of vocabulary appropriate for primary level",
+      },
+      {
+        name: "Grammar",
+        weight: 25,
+        description: "Sentence structure, tenses, subject-verb agreement, punctuation, articles",
+      },
+      {
+        name: "Organization",
+        weight: 15,
+        description: "Paragraphing, logical sequence, beginning/middle/end structure",
+      },
+      {
+        name: "Mechanics & Presentation",
+        weight: 15,
+        description: "Letter formation, spacing, handwriting clarity, formatting (HK primary grading norms)",
+      },
+    ],
+  },
+  // ========== TSA 中文（全港性系統評估 — 小三/小六） ==========
+  tsa_chinese: {
+    labelKey: "grade.rubricTSAChi",
+    criteria: [
+      {
+        name: "內容",
+        weight: 40,
+        description: "扣題、選材、記敘/描寫/說明的完整性（配合TSA評級指引）",
+      },
+      {
+        name: "詞句",
+        weight: 30,
+        description: "詞彙運用、句子結構、語句通順程度",
+      },
+      {
+        name: "結構",
+        weight: 15,
+        description: "分段、層次、過渡",
+      },
+      {
+        name: "標點字體",
+        weight: 15,
+        description: "標點符號、字體清楚、整潔",
+      },
+    ],
+  },
+  // ========== TSA English（全港性系統評估 — Primary 3/6） ==========
+  tsa_english: {
+    labelKey: "grade.rubricTSAEng",
+    criteria: [
+      {
+        name: "Content & Ideas",
+        weight: 30,
+        description: "Relevance, development of ideas, imagination (TSA Writing marking guidelines)",
+      },
+      {
+        name: "Language & Grammar",
+        weight: 35,
+        description: "Grammar, punctuation, spelling, sentence accuracy",
+      },
+      {
+        name: "Organization",
+        weight: 20,
+        description: "Coherence, paragraphing, logical sequence",
+      },
+      {
+        name: "Presentation",
+        weight: 15,
+        description: "Handwriting, neatness, formatting (TSA criteria)",
+      },
     ],
   },
   dse_chinese: {

@@ -9,13 +9,14 @@
   },
   "hero": {
     "badge": "AI Essay Grading Built for Hong Kong Teachers",
-    "headline": "Reclaim Time for Hong Kong Teachers: DSE-Level AI Essay Grading Expert",
+    "headline": "Primary × Secondary: DSE + TSA + Primary AI Essay Grading Platform",
     "headlineHighlight": "",
-    "subheadline": "Compify batch-grades your entire class against DSE/TSA rubrics, generating Content, Language & Organization scores with professional PDF reports — subscribe today, finish 30 essays tonight.",
+    "subheadline": "Compify batch-grades your entire class against DSE/TSA rubrics and Primary curriculum standards — one platform for Primary through High School.",
     "watchDemo": "Watch Demo",
     "statSaved": "Saved per week",
-    "statAccuracy": "DSE-aligned",
-    "statTeachers": "Teachers trust us",
+    "statAccuracy": "Rubric-aligned",
+    "statTeachers": "Beta — Teachers Welcome",
+    "statRubrics": "Rubric Presets",
     "batchGrading": "Compify — Class Grading",
     "graded": "Graded"
   },
@@ -71,7 +72,9 @@
     "analytics": "Class Weakness Analysis",
     "analyticsDesc": "Auto-detect common errors like '30% of students confuse Present Perfect vs Past Simple' — your next lesson plan, done.",
     "multiTeacher": "Multi-Teacher Collaboration",
-    "multiTeacherDesc": "School plans let your department share student data and standardize grading criteria."
+    "multiTeacherDesc": "School plans let your department share student data and standardize grading criteria.",
+    "primaryTitle": "Primary Writing Grading",
+    "primaryDesc": "Designed for Primary Chinese and English writing, aligned with HK Primary Curriculum rubrics (Content, Vocabulary, Sentences, Structure, Punctuation)."
   },
   "testimonials": {
     "label": "Testimonials",
@@ -150,6 +153,7 @@
     "terms": "Terms",
     "support": "Support",
     "copyright": "© 2026 Compify. All rights reserved.",
+    "disclaimer": "This report is AI-assisted and for teaching reference only. Final assessment is determined by the school/teacher. DSE/TSA level conversions are for reference and not official HKEAA results.",
     "institutionQuotation": "School / Institution Quotation"
   },
   "dashboard": {
@@ -230,6 +234,10 @@
     "rubricCustom": "Custom",
     "rubricDSEChi": "DSE Chinese",
     "rubricDSEEng": "DSE English",
+    "rubricPrimChi": "Primary Chinese",
+    "rubricPrimEng": "Primary English",
+    "rubricTSAChi": "TSA Chinese",
+    "rubricTSAEng": "TSA English",
     "rubricIB": "IB",
     "rubricIELTS": "IELTS",
     "rubricTOEFL": "TOEFL",

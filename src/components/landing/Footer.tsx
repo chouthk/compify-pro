@@ -34,6 +34,11 @@ const Footer = () => {
           </div>
           <p className="text-xs text-muted-foreground">{t("footer.copyright")}</p>
         </div>
+        <div className="mt-6 pt-4 border-t border-border text-center">
+          <p className="text-[10px] leading-relaxed text-muted-foreground/60 max-w-3xl mx-auto">
+            {t("footer.disclaimer")}
+          </p>
+        </div>
       </div>
     </footer>
   );
