@@ -32,7 +32,60 @@ function splitEssayIntoChunks(content: string, limit = CHUNK_CHAR_LIMIT): string
   return chunks.slice(0, 8);
 }
 
+/**
+ * AI provider abstraction.
+ * Supports:
+ *  - "lovable": Lovable Gateway (legacy, uses LOVABLE_API_KEY + model name)
+ *  - "deepseek": DeepSeek API (uses DEEPSEEK_API_KEY, model = "deepseek-chat")
+ * 
+ * Set AI_PROVIDER env var to "deepseek" or "lovable" (default: lovable for bc).
+ */
+
+const AI_PROVIDER = (Deno.env.get("AI_PROVIDER") || "lovable").toLowerCase();
+const DEEPSEEK_API_KEY = Deno.env.get("DEEPSEEK_API_KEY");
+const DEEPSEEK_MODEL = Deno.env.get("DEEPSEEK_MODEL") || "deepseek-chat";
+const DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1/chat/completions";
+
 async function callAI(apiKey: string, model: string, messages: { role: string; content: string }[], maxTokens = 4096) {
+  if (AI_PROVIDER === "deepseek") {
+    return await callDeepSeek(messages, maxTokens);
+  }
+  // Fallback: Lovable Gateway
+  return await callLovable(apiKey, model, messages, maxTokens);
+}
+
+async function callDeepSeek(messages: { role: string; content: string }[], maxTokens = 4096) {
+  if (!DEEPSEEK_API_KEY) {
+    throw new Error("DEEPSEEK_API_KEY not configured. Set it in Supabase Edge Function secrets.");
+  }
+  const response = await fetch(DEEPSEEK_BASE_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: DEEPSEEK_MODEL,
+      messages,
+      max_tokens: maxTokens,
+      temperature: 0.3,
+      stream: false,
+    }),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    console.error("DeepSeek API error:", response.status, errText);
+    const error = new Error(response.status === 429 ? "Rate limited by AI provider. Please try again shortly." : "AI grading failed");
+    (error as Error & { status?: number }).status = response.status;
+    throw error;
+  }
+
+  const data = await response.json();
+  return data.choices?.[0]?.message?.content ?? "";
+}
+
+async function callLovable(apiKey: string, model: string, messages: { role: string; content: string }[], maxTokens = 4096) {
   const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -44,7 +97,7 @@ async function callAI(apiKey: string, model: string, messages: { role: string; c
 
   if (!response.ok) {
     const errText = await response.text();
-    console.error("AI error:", response.status, errText);
+    console.error("Lovable AI error:", response.status, errText);
     const error = new Error(response.status === 429 ? "Rate limited. Please try again shortly." : response.status === 402 ? "AI credits exhausted." : "AI grading failed");
     (error as Error & { status?: number }).status = response.status;
     throw error;

@@ -26,9 +26,6 @@ serve(async (req) => {
     const { topic, genre, gradeLevel, examType, wordCount, uiLanguage } = await req.json();
     if (!topic || !genre) throw new Error("topic and genre are required");
 
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
-
     const langMap: Record<string, string> = {
       "zh-TW": "繁體中文",
       "zh-CN": "简体中文",
@@ -65,34 +62,70 @@ Format the output as:
 
 [Brief analysis of key writing techniques used, suitable for teacher reference]`;
 
-    const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt },
-        ],
-      }),
-    });
+    const AI_PROVIDER = (Deno.env.get("AI_PROVIDER") || "lovable").toLowerCase();
+    let content = "";
 
-    if (!aiResponse.ok) {
-      const errText = await aiResponse.text();
-      console.error("AI error:", aiResponse.status, errText);
-      if (aiResponse.status === 429) {
-        return new Response(JSON.stringify({ error: "Rate limited. Please try again shortly." }), {
-          status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+    if (AI_PROVIDER === "deepseek") {
+      const DEEPSEEK_API_KEY = Deno.env.get("DEEPSEEK_API_KEY");
+      if (!DEEPSEEK_API_KEY) throw new Error("DEEPSEEK_API_KEY not configured");
+      const aiResponse = await fetch("https://api.deepseek.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: Deno.env.get("DEEPSEEK_MODEL") || "deepseek-chat",
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: userPrompt },
+          ],
+          temperature: 0.3,
+          stream: false,
+        }),
+      });
+      if (!aiResponse.ok) {
+        const errText = await aiResponse.text();
+        console.error("DeepSeek API error:", aiResponse.status, errText);
+        if (aiResponse.status === 429) {
+          return new Response(JSON.stringify({ error: "Rate limited. Please try again shortly." }), {
+            status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+        throw new Error("Exemplar generation failed");
       }
-      throw new Error("Exemplar generation failed");
+      const aiData = await aiResponse.json();
+      content = aiData.choices?.[0]?.message?.content ?? "";
+    } else {
+      const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+      if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
+      const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash",
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: userPrompt },
+          ],
+        }),
+      });
+      if (!aiResponse.ok) {
+        const errText = await aiResponse.text();
+        console.error("AI error:", aiResponse.status, errText);
+        if (aiResponse.status === 429) {
+          return new Response(JSON.stringify({ error: "Rate limited. Please try again shortly." }), {
+            status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+        throw new Error("Exemplar generation failed");
+      }
+      const aiData = await aiResponse.json();
+      content = aiData.choices?.[0]?.message?.content ?? "";
     }
-
-    const aiData = await aiResponse.json();
-    const content = aiData.choices?.[0]?.message?.content ?? "";
 
     return new Response(JSON.stringify({ content }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
