@@ -3,15 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ArrowRight, Sparkles, Clock, FileCheck, Play, BarChart3 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const [demoOpen, setDemoOpen] = useState(false);
-
-  // Demo video only shows EN and zh-CN (Mandarin) versions
-  const getVideoSrc = () => {
-    return i18n.language === "zh-CN" ? "/compify-demo-zh-audio.mp4" : "/compify-demo-en-audio.mp4";
-  };
 
   return (
     <section className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-background">
@@ -33,7 +30,7 @@ const HeroSection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-up" style={{ animationDelay: '0.3s' }}>
-            <Button size="lg" className="bg-gradient-hero hover:opacity-90 transition-opacity text-base px-8 py-6 shadow-glow">
+            <Button size="lg" className="bg-gradient-hero hover:opacity-90 transition-opacity text-base px-8 py-6 shadow-glow" onClick={() => navigate("/signup")}>
               {t("nav.startFreeTrial")}
               <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
@@ -117,35 +114,34 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Demo Video Dialog - EN and zh-CN (Mandarin) only */}
+      {/* Demo Tour Dialog */}
       <Dialog open={demoOpen} onOpenChange={setDemoOpen}>
-        <DialogContent className="sm:max-w-4xl p-0 overflow-hidden bg-black border-border">
-          <div className="aspect-video w-full">
-            {demoOpen && (
-              <video
-                key={i18n.language}
-                src={getVideoSrc()}
-                autoPlay
-                controls
-                className="w-full h-full"
-                crossOrigin="anonymous"
-              >
-                <track
-                  kind="subtitles"
-                  src="/subtitles/en.vtt"
-                  srcLang="en"
-                  label="English"
-                  default={!i18n.language.startsWith("zh")}
-                />
-                <track
-                  kind="subtitles"
-                  src="/subtitles/zh-CN.vtt"
-                  srcLang="zh-CN"
-                  label="普通话"
-                  default={i18n.language.startsWith("zh")}
-                />
-              </video>
-            )}
+        <DialogContent className="sm:max-w-lg p-6">
+          <div className="text-center">
+            <h3 className="text-lg font-bold mb-2">Compify.Pro 功能導覽</h3>
+            <p className="text-sm text-muted-foreground mb-4">示範影片即將推出，敬請期待！</p>
+            <div className="space-y-3 text-left">
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
+                <span className="text-lg">📤</span>
+                <div><p className="font-medium text-sm">一鍵上傳全班作文</p><p className="text-xs text-muted-foreground">支援 PDF/DOCX/TXT，一次最多 100 篇</p></div>
+              </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
+                <span className="text-lg">🤖</span>
+                <div><p className="font-medium text-sm">AI 自動批改</p><p className="text-xs text-muted-foreground">C/L/O 三維評分，跟足 HKEAA 標準</p></div>
+              </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/40">
+                <span className="text-lg">📄</span>
+                <div><p className="font-medium text-sm">專業 PDF 報告</p><p className="text-xs text-muted-foreground">可直接派發學生及家長</p></div>
+              </div>
+            </div>
+            <div className="flex gap-3 mt-4 justify-center">
+              <Button onClick={() => { setDemoOpen(false); navigate("/signup"); }}>
+                立即免費試用
+              </Button>
+              <Button variant="outline" onClick={() => setDemoOpen(false)}>
+                關閉
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
