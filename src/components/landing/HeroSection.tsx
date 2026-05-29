@@ -63,7 +63,7 @@ const HeroSection = () => {
                 <FileCheck className="w-5 h-5 text-accent" />
               </div>
               <div className="text-left">
-                <p className="font-display font-bold text-2xl text-foreground">98%</p>
+                <p className="font-display font-bold text-2xl text-foreground">DSE</p>
                 <p className="text-xs text-muted-foreground">{t("hero.statAccuracy")}</p>
               </div>
             </div>
