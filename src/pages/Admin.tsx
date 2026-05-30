@@ -301,8 +301,7 @@ const Admin = () => {
               <RefreshCw className="w-4 h-4" /> Refresh
             </Button>
             <a
-              href={`https://lovable.dev/projects/5009f6ca-94a9-4814-908f-69a613470e09/settings/project-insights`}
-              target="_blank" rel="noopener noreferrer"
+              href={`/analytics`}
             >
               <Button variant="outline" size="sm" className="gap-1">
                 <ExternalLink className="w-4 h-4" /> Live Analytics
